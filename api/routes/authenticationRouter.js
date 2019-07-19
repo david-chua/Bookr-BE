@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const { authenticate } = require('./../../auth/authenticate.js');
-const Users = require('./../../models/usersModels.js');
+const Users = require('./../../models/usersModel.js');
 
 const server = express.Router();
 
@@ -12,8 +12,8 @@ const jwtKey = process.env.JWT_SECRET;
 
 function generateToken(user){
   const payload = {
-    subject: user.id,
-    username: user.username
+    username: user.username,
+    user_id: user.id
   };
 
   const options = {
@@ -30,7 +30,7 @@ server.post('/register', (req, res) => {
 
   Users.add(user)
     .then(saved => {
-      const token = generateToken(user);
+      const token = generateToken(user, user.id);
       res.status(201).json({
         id: saved.id,
         token,
@@ -49,7 +49,7 @@ server.post('/login', (req, res) => {
     .first()
     .then(user => {
       if (user && bcrypt.compareSync(password, user.password)){
-        const token = generateToken(user);
+        const token = generateToken(user, user.id);
         res.status(201).json({
           id: user.id,
           token,

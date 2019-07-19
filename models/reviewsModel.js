@@ -6,6 +6,7 @@ module.exports = {
  findById,
  add,
  edit,
+ findReviewsByBookId
 };
 
 
@@ -17,16 +18,25 @@ function findBy(filter){
   return db('reviews').where(filter);
 };
 
-async function add(user){
-  const [id] = await db('reviews').insert(user, "id");
-  return findById(id);
-}
-
 function findById(id){
   return db('reviews')
     .where({ id })
     .first()
 }
+
+function findReviewsByBookId(id){
+  return db('reviews')
+      .leftJoin('users', 'users.id', 'reviews.user_id')
+      .leftJoin('books', 'books.id', 'reviews.book_id')
+      .where('reviews.book_id', id)
+}
+
+async function add(review){
+  const [id] = await db('reviews').insert(review, "id");
+  return findById(id);
+}
+
+
 
 async function edit(id, changes){
   await db('reviews')

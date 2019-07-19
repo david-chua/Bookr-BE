@@ -17,8 +17,8 @@ function findBy(filter){
   return db('books').where(filter);
 };
 
-async function add(user){
-  const [id] = await db('books').insert(user, "id");
+async function add(book){
+  const [id] = await db('books').insert(book, "id");
   return findById(id);
 }
 
