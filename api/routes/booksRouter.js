@@ -16,16 +16,24 @@ const errorHelper = (status, message, res) => {
 };
 
 
-server.get('/all', authenticate, (req,res) => {
+server.get('/', authenticate, (req,res) => {
   Books.find()
-    .then(data => {
-      res.status(200).json({books: data })
+    .then(books => {
+      res.status(200).json({books: book })
     })
     .catch(err => {
       return errorHelper(400, 'Unable to get data')
     })
 });
 
-
+server.get('/:id', authenticate, (req,res) => {
+  Books.findById(req.params.id)
+    .then(response => {
+      console.log('books stuff', response)
+    })
+    .catch(error => {
+      return errorHelper(500, 'Internal Server Error');
+    })
+})
 
 module.exports = server;

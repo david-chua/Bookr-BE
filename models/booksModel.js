@@ -19,8 +19,8 @@ function findBy(filter){
 
 function findById(id){
   return db('books')
-    .where({ id })
-    .first()
+    .leftJoin('reviews', 'reviews.book_id', 'books.id')
+    .where( 'books.id', id )
 }
 
 async function add(book){
