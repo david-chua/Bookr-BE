@@ -17,15 +17,15 @@ function findBy(filter){
   return db('books').where(filter);
 };
 
-async function add(book){
-  const [id] = await db('books').insert(book, "id");
-  return findById(id);
-}
-
 function findById(id){
   return db('books')
     .where({ id })
     .first()
+}
+
+async function add(book){
+  const [id] = await db('books').insert(book, "id");
+  return findById(id);
 }
 
 async function edit(id, changes){

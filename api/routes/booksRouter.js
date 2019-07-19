@@ -27,4 +27,5 @@ server.get('/all', authenticate, (req,res) => {
 });
 
 
+
 module.exports = server;

@@ -23,7 +23,7 @@ server.get("/", authenticate, (req,res) => {
 })
 
 server.get("/:review_id", authenticate, (req,res) => {
-  Reviews.findReviewsByBookId(req.params.review_id)
+  Reviews.findReviewsByReviewID(req.params.review_id)
   .then(response => {
     res.json(response)
   })
@@ -88,6 +88,16 @@ server.post("/", authenticate, (req, res) => {
       return errorHelper('500', 'Internal Error');
     })
 });
+
+server.delete("/:review_id", authenticate, (req,res) => {
+  Reviews.remove(req.params.review_id)
+    .then(response => {
+      res.status(200).json({ message: "Review Deleted Successfully"})
+    })
+    .catch(error => {
+     return errorHelper('500', 'Internal Server Error');
+    })
+})
 
 
 
