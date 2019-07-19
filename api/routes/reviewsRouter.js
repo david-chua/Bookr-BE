@@ -99,6 +99,20 @@ server.delete("/:review_id", authenticate, (req,res) => {
     })
 })
 
+server.put("/:review_id", authenticate, (req,res) => {
+  console.log('req body', req.body);
+  if (!req.body.content || !req.body.rating || !req.body.book_id) {
+    return errorHelper('500', 'Please provide all necessary data')
+  }
+  Reviews.edit(req.params.review_id, req.body)
+    .then(response => {
+      res.json(response)
+    })
+    .catch(error => {
+      return errorHelper('500', 'Internal Server Error');
+    })
+
+})
 
 
 module.exports = server;

@@ -10,10 +10,10 @@ const server = express.Router();
 
 const jwtKey = process.env.JWT_SECRET;
 
-function generateToken(user){
+function generateToken(username, user_id){
   const payload = {
-    username: user.username,
-    user_id: user.id
+    username,
+    user_id
   };
 
   const options = {
