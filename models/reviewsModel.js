@@ -28,7 +28,7 @@ function findReviewsByBookId(id){
   return db('reviews')
       .leftJoin('users', 'users.id', 'reviews.user_id')
       .leftJoin('books', 'books.id', 'reviews.book_id')
-      .where('reviews.book_id', id)
+      .where('reviews.id', id)
 }
 
 async function add(review){

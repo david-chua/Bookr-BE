@@ -15,18 +15,32 @@ const errorHelper = (status, message, res) => {
   res.status(status).json({ err: message })
 }
 
+server.get("/", authenticate, (req,res) => {
+  Reviews.find()
+  .then(response => {
+    res.json(response);
+  })
+})
+
+server.get("/:review_id", authenticate, (req,res) => {
+  Reviews.findReviewsByBookId(req.params.review_id)
+  .then(response => {
+    res.json(response)
+  })
+  .catch(error => {
+    errorHelper('500', 'Internal Server Error');
+  })
+});
+
 server.post("/", authenticate, (req, res) => {
   const review = req.body.book.review;
   const book = req.body.book;
   const user_id = req.body.user_id;
   let book_id = null;
 
-  console.log('req', req.body)
-
   Books
     .findBy({ "title": book.title})
     .then(response => {
-        console.log(response)
         if (response.length === 0){
           Books.add({
             title: book.title,
@@ -35,7 +49,6 @@ server.post("/", authenticate, (req, res) => {
             image: book.image
           })
           .then(response => {
-            console.log('response', response)
             book_id = response.id
             Reviews.add({
               content: review.content,
@@ -44,7 +57,6 @@ server.post("/", authenticate, (req, res) => {
               rating: review.rating
             })
             .then(response => {
-              console.log('review addition response', response)
               res.json(response)
             })
             .catch(error => {
@@ -56,7 +68,6 @@ server.post("/", authenticate, (req, res) => {
           })
         }
         else {
-          console.log('already in the database', response);
           book_id = response[0].id
           Reviews
             .add({
@@ -66,7 +77,6 @@ server.post("/", authenticate, (req, res) => {
                rating: review.rating
              })
              .then(response => {
-               console.log('new review, old response', response);
                res.json(response);
              })
              .catch(error => {
