@@ -6,6 +6,10 @@ exports.up = function(knex, Promise) {
         tbl.string('author')
         tbl.string('publisher')
         tbl.string('image')
+        tbl.string('book_api_id')
+        tbl.string('category')
+        tbl.string('description')
+        tbl.float('list_price')
     })
 };
 

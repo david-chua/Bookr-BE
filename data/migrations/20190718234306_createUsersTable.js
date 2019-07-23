@@ -12,7 +12,7 @@ exports.up = function(knex, Promise) {
     tbl.string('last_name', 255)
     tbl.string('gender')
     tbl.string('avatar')
-    tbl.string('password', 128).notNullable();
+    tbl.string('password', 128)
   });
 };
 
