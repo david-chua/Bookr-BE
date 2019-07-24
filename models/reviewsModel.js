@@ -6,7 +6,6 @@ module.exports = {
  findById,
  add,
  edit,
- findReviewsByReviewID,
  remove
 };
 
@@ -23,13 +22,6 @@ function findById(id){
   return db('reviews')
     .where({ id })
     .first()
-}
-
-function findReviewsByReviewID(id){
-  return db('reviews')
-      .leftJoin('users', 'users.id', 'reviews.user_id')
-      .leftJoin('books', 'books.id', 'reviews.book_id')
-      .where('reviews.id', id)
 }
 
 async function add(review){

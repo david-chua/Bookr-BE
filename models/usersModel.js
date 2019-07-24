@@ -6,11 +6,12 @@ module.exports = {
  findById,
  add,
  edit,
+ remove
 };
 
 
 function find() {
-  return db('users').select('id', 'username', 'first_name', 'last_name','password');
+  return db('users');
 }
 
 function findBy(filter){
@@ -34,4 +35,10 @@ async function edit(id, changes){
   .update(changes)
 
   return findById(id);
+}
+
+function remove(id){
+  db("users")
+  .where({id: id})
+  .del();
 }

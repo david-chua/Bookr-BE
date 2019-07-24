@@ -6,11 +6,12 @@ module.exports = {
  findById,
  add,
  edit,
+ remove
 };
 
 
 function find() {
-  return db('books').select('id', 'title', 'author', 'publisher', 'image');
+  return db('books');
 }
 
 function findBy(filter){
@@ -19,8 +20,8 @@ function findBy(filter){
 
 function findById(id){
   return db('books')
-    .leftJoin('reviews', 'reviews.book_id', 'books.id')
     .where( 'books.id', id )
+    .first()
 }
 
 async function add(book){
@@ -34,4 +35,10 @@ async function edit(id, changes){
   .update(changes)
 
   return findById(id);
+}
+
+function remove(id){
+  db("books")
+  .where({id: id})
+  .del();
 }
