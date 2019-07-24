@@ -30,6 +30,6 @@ async function add(input){
 
 function remove(input){
   return db("booksOwned")
-    .where({input})
+    .where(input)
     .del();
 }
