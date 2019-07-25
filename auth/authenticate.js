@@ -4,8 +4,22 @@ const User = require("../models/usersModel");
 const jwtKey = process.env.JWT_SECRET;
 const client = new OAuth2Client(process.env.OAUTH_CLIENT_ID);
 module.exports = {
+  generateToken,
   authenticate,
   authAndFindUser
+};
+
+function generateToken(user){
+  const payload = {
+    subject: user.id,
+    username: user.username
+  };
+
+  const options = {
+    expiresIn: '1d'
+  };
+
+  return jwt.sign(payload, jwtKey, options)
 };
 
 function authenticate(req, res, next) {
