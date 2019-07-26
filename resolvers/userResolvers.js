@@ -6,6 +6,20 @@ const BooksOwned = require("./../models/booksOwnedModel");
 const FavoriteBooks = require("./../models/favoriteBooksModel");
 const BooksRead = require("./../models/booksReadModel");
 const BooksBorrowed = require("./../models/booksBorrowedModel");
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
+const jwtKey = process.env.JWT_SECRET;
+const generateToken = function(user){
+  const payload = {
+    email: user.email,
+    subject: user.id
+  };
+  const options = {
+    expiresIn: '1d'
+  };
+  return jwt.sign(payload, jwtKey, options)
+};
 
 const authenticated = next => (root, args, ctx, info) => {
   if (!ctx.currentUser){
@@ -56,6 +70,17 @@ module.exports = {
     getReviewsByUserId: async(root, args, ctx) => {
       const user = await Reviews.findBy({ user_id: args.userId});
       return user;
+    },
+    loginUser: async (root, args, ctx) => {
+      let { email, password } = args.input;
+      let user = await User.findBy({ email: email }).first();
+      if (user && bcrypt.compareSync(password, user.password)){
+          const token = generateToken(user);
+          user.token = token
+          console.log(user)
+          console.log(token)
+          return user
+        }
     }
   },
 
@@ -88,6 +113,9 @@ module.exports = {
 
   Mutation: {
     addUser: async(root, args, ctx) => {
+      let user = args.input;
+      const hash = bcrypt.hashSync(user.password, 10)
+      user.password = hash;
       const newUser = await User.add(args.input);
       return newUser;
     },

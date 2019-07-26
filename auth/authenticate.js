@@ -11,14 +11,12 @@ module.exports = {
 
 function generateToken(user){
   const payload = {
-    subject: user.id,
-    username: user.username
+    email: user.email,
+    subject: user.id
   };
-
   const options = {
     expiresIn: '1d'
   };
-
   return jwt.sign(payload, jwtKey, options)
 };
 
@@ -28,9 +26,7 @@ function authenticate(req, res, next) {
   if(jwttoken){
     jwt.verify(jwttoken, jwtKey, (err, decoded) => {
       if (err) return res.status(401).json(err);
-
       req.decodedJwt = decoded;
-
       next();
     });
   } else {

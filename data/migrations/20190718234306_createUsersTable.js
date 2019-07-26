@@ -11,6 +11,7 @@ exports.up = function(knex, Promise) {
     tbl.string('avatar')
     tbl.string('userType')
     tbl.string('password', 128)
+    tbl.string('token')
   });
 };
 

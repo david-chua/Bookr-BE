@@ -13,6 +13,7 @@ module.exports = gql`
     getBooksLoanedByOwner(userId: ID!): [BooksBorrowed]!
     getBooksBorrowedByBorrower(userId: ID!): [BooksBorrowed]!
     getReviewsByUserId(userId: ID!): [Review]!
+    loginUser(input: LoginInput!): User
 
     #//*Books
     getBooks: [Book!]!
@@ -79,6 +80,7 @@ module.exports = gql`
     avatar: String
     userType: String
     password: String
+    token: String
     reviews: [Review!]!
     booksOwned: [BooksOwned!]!
     booksRead: [BooksRead!]!
@@ -138,7 +140,11 @@ module.exports = gql`
     gender: String
     avatar: String
     userType: String
-    password: String
+  }
+
+  input LoginInput{
+    email: String!
+    password: String!
   }
 
   input BookInput {
