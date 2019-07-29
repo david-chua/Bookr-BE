@@ -13,13 +13,14 @@ const server = new ApolloServer({
     let authToken = null;
     let currentUser = null;
     try {
-      authToken = req.headers.authorization;
-      if (authToken) {
-        // Authenticate and find user
+      authToken = await req.headers.authorization;
+      if (authToken.length > 1000) {
         currentUser = await authAndFindUser(authToken);
+      } else {
+        currentUser = await authenticate(authToken);
       }
     } catch (err) {
-      console.error(`Unable to authenticate user with token ${authToken}`);
+      return err
     }
     return { currentUser };
   }

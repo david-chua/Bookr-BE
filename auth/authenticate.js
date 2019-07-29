@@ -4,37 +4,18 @@ const User = require("../models/usersModel");
 const jwtKey = process.env.JWT_SECRET;
 const client = new OAuth2Client(process.env.OAUTH_CLIENT_ID);
 module.exports = {
-  generateToken,
   authenticate,
   authAndFindUser
 };
 
-function generateToken(user){
-  const payload = {
-    email: user.email,
-    subject: user.id
-  };
-  const options = {
-    expiresIn: '1d'
-  };
-  return jwt.sign(payload, jwtKey, options)
-};
+async function authenticate(token){
+   // verify the auth token
+  const decoded = jwt.verify(token, jwtKey);
+   //check if user exists in database
+  const [user] = await checkIfUserExists(decoded.email);
 
-function authenticate(req, res, next) {
-  const jwttoken = req.get('Authorization');
-
-  if(jwttoken){
-    jwt.verify(jwttoken, jwtKey, (err, decoded) => {
-      if (err) return res.status(401).json(err);
-      req.decodedJwt = decoded;
-      next();
-    });
-  } else {
-    return res.status(401).json({
-      error: 'No token provided, must be set on the Authorization Header'
-    });
-  };
-};
+  return user;
+}
 
 async function authAndFindUser(token){
  // verify the auth token
