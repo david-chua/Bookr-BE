@@ -13,7 +13,6 @@ module.exports = gql`
     getBooksLoanedByOwner(userId: ID!): [BooksBorrowed]!
     getBooksBorrowedByBorrower(userId: ID!): [BooksBorrowed]!
     getReviewsByUserId(userId: ID!): [Review]!
-    loginUser(input: LoginInput!): User
 
     #//*Books
     getBooks: [Book!]!
@@ -44,6 +43,8 @@ module.exports = gql`
     addUser(input: UserInput!): User!
     updateUser(id: ID!, input: UserInput!): User!
     deleteUser(id: ID!): Int!
+    loginUser(input: LoginInput!): User
+    registerUser(input: UserInput!): User
 
     #//*Books
     addBook(input: BookInput!): Book!
@@ -140,6 +141,7 @@ module.exports = gql`
     gender: String
     avatar: String
     userType: String
+    password: String
   }
 
   input LoginInput{

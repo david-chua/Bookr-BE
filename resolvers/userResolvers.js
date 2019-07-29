@@ -70,17 +70,6 @@ module.exports = {
     getReviewsByUserId: async(root, args, ctx) => {
       const user = await Reviews.findBy({ user_id: args.userId});
       return user;
-    },
-    loginUser: async (root, args, ctx) => {
-      let { email, password } = args.input;
-      let user = await User.findBy({ email: email }).first();
-      if (user && bcrypt.compareSync(password, user.password)){
-          const token = generateToken(user);
-          user.token = token
-          console.log(user)
-          console.log(token)
-          return user
-        }
     }
   },
 
@@ -126,6 +115,30 @@ module.exports = {
     deleteUser: async(root, args, ctx) => {
       const user = await User.remove(args.id);
       return count;
+    },
+    loginUser: async (root, args, ctx) => {
+      let { email, password } = args.input;
+      let user = await User.findBy({ email: email }).first();
+      if (user && bcrypt.compareSync(password, user.password)){
+          const token = generateToken(user);
+          user.token = token
+          return user
+      }  else {
+        throw new Error('Unable to login')    
+      }
+    },
+    registerUser: async (root, args, ctx) => {
+      const hash = bcrypt.hashSync(args.input.password,10);
+      args.input.password = hash;
+
+      if(args.input.username.length && args.input.password.length) {
+        let user = await User.add(args.input, "id")
+        const token = generateToken(user)
+        user.token = token
+        return user
+      } else {
+        throw new Error('Unable to Register User')
+      }
     }
   }
 };
