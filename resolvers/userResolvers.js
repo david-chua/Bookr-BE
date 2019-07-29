@@ -124,7 +124,7 @@ module.exports = {
           user.token = token
           return user
       }  else {
-        throw new Error('Unable to login')    
+        throw new Error('Unable to login')
       }
     },
     registerUser: async (root, args, ctx) => {
