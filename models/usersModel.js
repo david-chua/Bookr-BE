@@ -37,8 +37,8 @@ async function edit(id, changes){
   return findById(id);
 }
 
-function remove(id){
-  db("users")
-  .where({id: id})
-  .del();
+function remove(id) {
+  return db("users")
+    .where("id", id)
+    .del();
 }
