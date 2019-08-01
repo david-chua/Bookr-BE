@@ -116,6 +116,23 @@ module.exports = {
       const count = await User.remove(args.id);
       return count;
     },
+    updatePassword: async (root, args, ctx) => {
+      let { oldPassword, newPassword } = args.input;
+      let user = await User.findBy({ id: args.id}).first();
+      console.log('user', user);
+      if (user && bcrypt.compareSync(oldPassword, user.password)){
+        const hash = bcrypt.hashSync(newPassword, 10);
+        args.input.newPassword = hash;
+        const newPass = {
+          password: hash
+        }
+
+        const user = await User.edit(args.id, newPass);
+        return user;
+      } else {
+        throw new Error('unable to edit password');
+      }
+    },
     loginUser: async (root, args, ctx) => {
       let { email, password } = args.input;
       let user = await User.findBy({ email: email }).first();

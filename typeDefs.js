@@ -42,6 +42,7 @@ module.exports = gql`
     #//*Users
     addUser(input: UserInput!): User!
     updateUser(id: ID!, input: UserInput!): User!
+    updatePassword(id: ID!, input: passwordInput!): User!
     deleteUser(id: ID!): Int!
     loginUser(input: LoginInput!): User
     registerUser(input: UserInput!): User
@@ -147,6 +148,11 @@ module.exports = gql`
   input LoginInput{
     email: String!
     password: String!
+  }
+
+  input passwordInput{
+    newPassword: String!
+    oldPassword: String!
   }
 
   input BookInput {
