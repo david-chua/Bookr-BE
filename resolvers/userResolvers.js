@@ -113,7 +113,7 @@ module.exports = {
       return user;
     },
     deleteUser: async(root, args, ctx) => {
-      const user = await User.remove(args.id);
+      const count = await User.remove(args.id);
       return count;
     },
     loginUser: async (root, args, ctx) => {
