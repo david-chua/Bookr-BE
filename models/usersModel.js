@@ -33,7 +33,7 @@ async function edit(id, changes){
   await db('users')
   .where('id', id)
   .update(changes)
-
+  
   return findById(id);
 }
 
