@@ -14,7 +14,7 @@ module.exports = {
       return review;
     },
     getReviewsBy: async(root, args, ctx) => {
-      const review = await Review.findBy({[args.param]: args.value})
+      const review = await Review.findBy({[args.param]: args.value}).first();
       return review;
     }
   },

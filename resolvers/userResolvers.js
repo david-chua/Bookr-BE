@@ -75,7 +75,7 @@ module.exports = {
 
   User: {
     reviews: async(root, args, ctx, info) => {
-      const reviews = await Reviews.findBy({ user_id: root_id});
+      const reviews = await Reviews.findBy({ user_id: root.id});
       return reviews;
     },
     booksOwned: async(root, args, ctx, info) => {

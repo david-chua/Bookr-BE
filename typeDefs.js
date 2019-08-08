@@ -22,7 +22,7 @@ module.exports = gql`
     #//*Reviews
     getReviews: [Review!]!
     getReviewsById(reviewId: ID!): Review
-    getReviewsBy(reviewId: ID!): Review
+    getReviewsBy(param: String!, value: String!): Review
 
     #//*BooksOwned
     getBooksOwnedByUser(id: ID!): [BooksOwned]
@@ -100,7 +100,7 @@ module.exports = gql`
     book_api_id: String
     category: String
     description: String
-    list_price: Float!
+    list_price: Float
     reviews: [Review!]!
   }
 
@@ -163,7 +163,7 @@ module.exports = gql`
     book_api_id: String
     category: String
     description: String
-    list_price: Float!
+    list_price: Float
   }
 
   input ReviewInput {
