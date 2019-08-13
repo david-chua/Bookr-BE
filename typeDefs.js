@@ -96,6 +96,7 @@ module.exports = gql`
     title: String!
     author: String
     publisher: String
+    publish_date: String
     image: String
     book_api_id: String
     category: String
@@ -159,6 +160,7 @@ module.exports = gql`
     title: String!
     author: String
     publisher: String
+    publish_date: String
     image: String
     book_api_id: String
     category: String

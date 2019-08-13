@@ -5,6 +5,7 @@ exports.up = function(knex, Promise) {
         tbl.string('title').notNullable();
         tbl.string('author')
         tbl.string('publisher')
+        tbl.string('publish_date')
         tbl.string('image')
         tbl.string('book_api_id')
         tbl.string('category')
