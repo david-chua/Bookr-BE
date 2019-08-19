@@ -20,7 +20,7 @@ function findBy(filter){
 
 function findById(id){
   return db('books')
-    .where({id})
+    .where( 'books.id', id )
     .first()
 }
 
