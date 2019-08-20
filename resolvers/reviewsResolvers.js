@@ -38,6 +38,7 @@ module.exports = {
     },
     editReview: async(root,args, ctx) => {
       const review = await Reviews.edit(args.id, args.input);
+      return review;
     },
     deleteReview: async(root, args, ctx) => {
       const count = await Reviews.remove(args.id);
