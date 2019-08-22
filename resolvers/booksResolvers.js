@@ -27,6 +27,7 @@ module.exports ={
   Mutation: {
     addBook: async(root, args, ctx) => {
       const book = await Books.add(args.input);
+      console.log(book)
       return book;
     }
   }
