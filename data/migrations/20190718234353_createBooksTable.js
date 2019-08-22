@@ -9,7 +9,7 @@ exports.up = function(knex, Promise) {
         tbl.string('image')
         tbl.string('book_api_id')
         tbl.string('category')
-        tbl.string('description')
+        tbl.text('description')
         tbl.float('list_price')
     })
 };
