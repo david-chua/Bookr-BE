@@ -25,10 +25,16 @@ function findById(id){
 }
 
 async function add(book){
-  console.log(book)
-  const [id] = await db('books').insert(book, "id");
-  console.log(id)
-  return findById(id);
+  try{
+    console.log(book)
+    const [id] = await db('books').insert(book, "id");
+    console.log(id)
+    return findById(id);
+  }
+  catch(error){
+    console.log(error)
+  }
+
 }
 
 async function edit(id, changes){
