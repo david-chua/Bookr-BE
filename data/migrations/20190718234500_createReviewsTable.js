@@ -2,7 +2,7 @@
 exports.up = function(knex, Promise) {
     return knex.schema.createTable('reviews', tbl =>{
         tbl.increments('id');
-        tbl.string('content').notNullable();
+        tbl.text('content').notNullable();
         tbl.float('rating').notNullable();
         tbl
           .integer('user_id')
