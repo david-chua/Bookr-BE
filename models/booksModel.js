@@ -20,12 +20,12 @@ function findBy(filter){
 
 function findById(id){
   return db('books')
-    .where( 'books.id', id )
+    .where({ id })
     .first()
 }
 
 async function add(book){
-  const [id] = await db('books').insert(book, "id");
+  const [ id ] = await db('books').insert(book, "id");
   return findById(id);
 }
 
