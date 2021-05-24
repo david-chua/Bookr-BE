@@ -5,6 +5,7 @@ module.exports ={
   Query: {
     getBooks: async(root, args, ctx) => {
       const books = await Books.find();
+      console.log(books)
       return books;
     },
     getBookById: async(root, args, ctx) => {
