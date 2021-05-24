@@ -9,6 +9,7 @@ const server = new ApolloServer({
   resolvers,
   introspection: true,
   playground: true,
+  cors: false,
   context: async ({ req }) => {
     let authToken = null;
     let currentUser = null;
